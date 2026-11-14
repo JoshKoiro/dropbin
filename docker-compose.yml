@@ -1,0 +1,32 @@
+services:
+  dropbin:
+    build: .
+    container_name: dropbin
+    restart: unless-stopped
+
+    # Files are written as this user:group. Match the IDs your media server
+    # (Jellyfin / Plex / etc.) runs as so it can read them. Find yours with `id`.
+    user: "1000:1000"
+
+    ports:
+      - "8080:8080"
+
+    # Each folder you mount under /library becomes a destination button.
+    # Use the SAME host paths your media server container already maps.
+    volumes:
+      - /srv/media/movies:/library/Movies
+      - "/srv/media/tv:/library/TV Shows"
+      # - /srv/media/youtube:/library/YouTube
+
+    environment:
+      TITLE: "dropbin"
+      # Leave blank for no login. Any username works; only the password is checked.
+      PASSWORD: ""
+      # Comma list, or "*" to allow any file type.
+      ALLOWED_EXTENSIONS: "mp4,mkv,avi,mov,m4v,webm,wmv,ts,m2ts,mpg,mpeg,srt,ass,ssa,vtt,sub,idx"
+      # 0 = unlimited.
+      MAX_UPLOAD_GB: "0"
+      # true = replace existing files; false = save as "Name (1).mkv".
+      OVERWRITE: "false"
+      # Lets the server download a direct file link itself.
+      ENABLE_URL_FETCH: "true"
