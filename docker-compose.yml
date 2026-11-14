@@ -10,7 +10,7 @@ services:
     # user: "1000:1000"
 
     ports:
-      - "8080:8080"
+      - "9998:8080"   # host:container
 
     # Each folder you mount under /library becomes a destination button.
     # Use the SAME host paths your media server container already maps.
