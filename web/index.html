@@ -282,6 +282,7 @@ async function init() {
     b.textContent = d; b.onclick = () => pick(d);
     box.appendChild(b);
   }
+  if (cfg.destinations.length === 1) box.hidden = true; // single library: no picker needed
   const saved = store.get('dropbin.dest');
   pick(cfg.destinations.includes(saved) ? saved : cfg.destinations[0]);
 }

@@ -4,9 +4,10 @@ services:
     container_name: dropbin
     restart: unless-stopped
 
-    # Files are written as this user:group. Match the IDs your media server
-    # (Jellyfin / Plex / etc.) runs as so it can read them. Find yours with `id`.
-    user: "1000:1000"
+    # Runs as root by default, same as Stash. To have uploads owned by you instead,
+    # uncomment and set to your IDs (run `id` on the server). The data folder
+    # must be writable by that user.
+    # user: "1000:1000"
 
     ports:
       - "8080:8080"
@@ -14,9 +15,7 @@ services:
     # Each folder you mount under /library becomes a destination button.
     # Use the SAME host paths your media server container already maps.
     volumes:
-      - /srv/media/movies:/library/Movies
-      - "/srv/media/tv:/library/TV Shows"
-      # - /srv/media/youtube:/library/YouTube
+      - /home/josh/docker/docker-compose/stash/data:/library/Stash
 
     environment:
       TITLE: "dropbin"
